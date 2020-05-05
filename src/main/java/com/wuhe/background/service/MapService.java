@@ -24,7 +24,6 @@ public class MapService {
     private MapDao mapDao;
 
     public Object getAllMarker(RectQueryView view) {
-//        Collection<Marker> markers = mapDao.getAllMarker();
         List<Marker> markers = mapDao.getAllMarker(view);
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("count", markers.size());
@@ -33,7 +32,7 @@ public class MapService {
     }
 
     public  Object getAllEvent() {
-        Collection<EventWeekly> events = mapDao.getAllEvent();
+        List<Event> events = mapDao.getAllEvent();
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("count", events.size());
         hashMap.put("type", events);
@@ -44,8 +43,8 @@ public class MapService {
         return mapDao.submitEvent(view);
     }
 
-    public  Object getChartsInfo() {
-        Collection<EventWeekly> events = mapDao.getChartsInfo();
+    public  Object getChartsInfo(RectQueryView view) {
+        List<EventWeekly> events = mapDao.getChartsInfo(view);
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("count", events.size());
         hashMap.put("type", events);

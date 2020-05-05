@@ -8,7 +8,7 @@ import java.util.Date;
  */
 public class Marker {
 
-    Integer id;
+    String id;
     // 经纬度
     Point pt;
     // 事件类型
@@ -20,7 +20,9 @@ public class Marker {
     // 细节详情
     String details;
 
-    public Marker(Integer id,Double lng,Double lat, Integer type, String typeName, Date time, String details) {
+    public Marker() {}
+
+    public Marker(String id,Double lng,Double lat, Integer type, String typeName, Date time, String details) {
         this.id = id;
         this.pt = new Point(lng,lat);
         this.type = type;
@@ -29,7 +31,7 @@ public class Marker {
         this.details = details;
     }
 
-    public Marker(Integer id, Point pt, Integer type, String typeName, Date time, String details) {
+    public Marker(String id, Point pt, Integer type, String typeName, Date time, String details) {
         this.id = id;
         this.pt = pt;
         this.type = type;
@@ -38,11 +40,11 @@ public class Marker {
         this.details = details;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

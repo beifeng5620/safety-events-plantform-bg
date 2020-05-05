@@ -8,19 +8,21 @@ import java.util.Arrays;
  */
 public class EventWeekly extends Event {
 
-    // [周一, 周二, 周三, 周四, 周五, 周六, 周日] 数目
-    Integer[] weeklyHappened;
+    // [周日,周一, 周二, 周三, 周四, 周五, 周六] 数目
+    Long[] weeklyHappened;
 
-    public EventWeekly(Integer id, String name, Integer[] weeklyHappened) {
+    public EventWeekly() {}
+
+    public EventWeekly(String id, String name, Long[] weeklyHappened) {
         super(id, name);
         this.weeklyHappened = weeklyHappened;
     }
 
-    public Integer[] getWeeklyHappened() {
+    public Long[] getWeeklyHappened() {
         return weeklyHappened;
     }
 
-    public void setWeeklyHappened(Integer[] weeklyHappened) {
+    public void setWeeklyHappened(Long[] weeklyHappened) {
         this.weeklyHappened = weeklyHappened;
     }
 

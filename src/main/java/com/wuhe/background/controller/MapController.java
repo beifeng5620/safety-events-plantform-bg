@@ -21,7 +21,7 @@ public class MapController {
 
     @RequestMapping("/getAllMarker")
     public Object getAllMarker(RectQueryView view) {
-        System.out.println("view = " + view);
+        System.out.println("getAllMarker view = " + view);
         return mapService.getAllMarker(view);
     }
 
@@ -33,13 +33,13 @@ public class MapController {
     @RequestMapping("/submitEvent")
     public  Object submitEvent(SubmitEventView view, HttpServletRequest request) {
         view.setIp(request.getRemoteAddr());
-        System.out.println("view = " + view);
+        System.out.println("submitEvent view = " + view);
         return mapService.submitEvent(view);
     }
 
     @RequestMapping("/getChartsInfo")
     public  Object getChartsInfo(RectQueryView view) {
-        System.out.println("view = " + view);
-        return mapService.getChartsInfo();
+        System.out.println("getChartsInfo view = " + view);
+        return mapService.getChartsInfo(view);
     }
 }
