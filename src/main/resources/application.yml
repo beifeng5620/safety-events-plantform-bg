@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    username: root
+    password: 1234560
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/map?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false
+#    schema:
+#      - classpath:map.sql
+server:
+  port: 8080
