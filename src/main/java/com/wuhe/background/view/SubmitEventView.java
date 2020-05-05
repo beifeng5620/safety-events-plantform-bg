@@ -1,6 +1,6 @@
 package com.wuhe.background.view;
 
-import java.util.Date;
+import org.springframework.util.StringUtils;
 
 /**
  * @author wuhe
@@ -11,7 +11,7 @@ public class SubmitEventView {
     Double lng;
     Double lat;
     // 事件类型
-    Integer eventType;
+    String eventType;
     // 发生时间
     String time;
     // 联系方式
@@ -21,7 +21,7 @@ public class SubmitEventView {
     // IP
     String ip;
 
-    public SubmitEventView(Double lng, Double lat, Integer eventType, String time, String contact, String details, String ip) {
+    public SubmitEventView(Double lng, Double lat, String eventType, String time, String contact, String details, String ip) {
         this.lng = lng;
         this.lat = lat;
         this.eventType = eventType;
@@ -47,11 +47,11 @@ public class SubmitEventView {
         this.lat = lat;
     }
 
-    public Integer getEventType() {
+    public String getEventType() {
         return eventType;
     }
 
-    public void setEventType(Integer eventType) {
+    public void setEventType(String eventType) {
         this.eventType = eventType;
     }
 
@@ -98,5 +98,20 @@ public class SubmitEventView {
                 ", details='" + details + '\'' +
                 ", ip='" + ip + '\'' +
                 '}';
+    }
+
+    /**
+     * 判断入参是否是null
+     *
+     * @return
+     */
+    public boolean isEmpty() {
+        if (null == this.lng || null == this.lat || StringUtils.isEmpty(this.eventType) ||
+                StringUtils.isEmpty(this.time) || StringUtils.isEmpty(this.contact) ||
+                StringUtils.isEmpty(this.details) || StringUtils.isEmpty(this.ip)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

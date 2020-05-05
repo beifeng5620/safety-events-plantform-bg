@@ -3,8 +3,7 @@ package com.wuhe.background.dao;
 import com.wuhe.background.entities.Event;
 import com.wuhe.background.entities.EventWeekly;
 import com.wuhe.background.entities.Marker;
-import com.wuhe.background.entities.Point;
-import com.wuhe.background.utils.DateUtils;
+import com.wuhe.background.utils.IDUtils;
 import com.wuhe.background.view.RectQueryView;
 import com.wuhe.background.view.SubmitEventView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +12,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 根据区域范围查询地图标注
@@ -25,39 +23,6 @@ import java.util.*;
  */
 @Repository
 public class MapDao {
-
-    private static Map<Integer, Marker> markers = null;
-    private static Map<Integer, EventWeekly> events= null;
-
-    static {
-        markers = new HashMap<>();
-        markers.put(1001,new Marker("1001",new Point(118.10388605,24.48923061),1,"纵火", new Date(),"地址：北京市东城区王府井大街88号乐天银泰百货八层"));
-        markers.put(1002,new Marker("1002",new Point(118.10988608,24.48923065),2,"攻击", new Date(),"地址：厦门"));
-        Long[] weeklyHappenedArr1 = new Long[]{320l, 302l, 301l, 334l, 390l, 330l, 320l};
-        Long[] weeklyHappenedArr2 = new Long[]{120l, 132l, 101l, 134l, 90l, 230l, 210l};
-        events = new HashMap<>();
-        events.put(1,new EventWeekly("1","纵火",weeklyHappenedArr1));
-        events.put(2,new EventWeekly("2","攻击",weeklyHappenedArr2));
-    }
-
-    private static String initId= "1003";
-
-    // 保存到事件暂存 ==> 加入事件表的markers记录
-    public  Object submitEvent(SubmitEventView view) {
-        try {
-            markers.put(Integer.valueOf(initId),new Marker(initId,new Point(view.getLng(),view.getLat()),view.getEventType(),(events.get(view.getEventType())).getName(), DateUtils.str2date(view.getTime()),view.getDetails()));
-            Integer tmp = Integer.valueOf(initId);
-            tmp++;
-            initId = tmp.toString();
-            return  "保存成功";
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return "保存失败";
-        }
-
-    }
-
-
     @Autowired
     JdbcTemplate jdbcTemplate;
 
@@ -186,5 +151,19 @@ public class MapDao {
 
         }
         return eventWeeklies;
+    }
+
+    // 保存到事件暂存 ==> 加入事件表的markers记录
+    public  Object submitEvent(SubmitEventView view) {
+        if (!view.isEmpty()) {
+            String sql = "INSERT INTO event_tmp VALUES(?,?,?,?,?,?,?,?,?)";
+            Object[] obj = new Object[]{IDUtils.uuid(),view.getLng(),view.getLat(),view.getTime(),
+                                view.getEventType(),view.getContact(),view.getIp(),"0",view.getDetails()};
+            int rows = jdbcTemplate.update(sql,obj);
+            if (rows == 1) {
+                return "提交成功等待审核";
+            }
+        }
+        return "保存失败";
     }
 }

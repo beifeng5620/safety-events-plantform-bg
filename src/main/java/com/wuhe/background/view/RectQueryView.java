@@ -1,8 +1,5 @@
 package com.wuhe.background.view;
 
-import com.wuhe.background.entities.Point;
-import org.springframework.util.StringUtils;
-
 /**
  * @author wuhe
  * @Date 2020/4/30 - 16:53
@@ -63,8 +60,12 @@ public class RectQueryView {
                 '}';
     }
 
+    /**
+     * 判断入参是否是null
+     * @return
+     */
     public  boolean isEmpty() {
-        if (StringUtils.isEmpty(this.tlLng) || StringUtils.isEmpty(this.tlLat) || StringUtils.isEmpty(this.brLng) || StringUtils.isEmpty(this.brLat)) {
+        if (null == this.tlLng || null == this.tlLat || null == this.brLng || null == this.brLat){
             return true;
         } else {
             return false;
