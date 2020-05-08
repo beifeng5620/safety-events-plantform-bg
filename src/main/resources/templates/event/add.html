@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)https://getbootstrap.com/docs/4.1/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="https://getbootstrap.com/favicon.ico" />
+
+    <title>事件添加/修改</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/asset/css/bootstrap.min.css}" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/asset/css/dashboard.css}" rel="stylesheet" />
+    <style type="text/css">/* Chart.js */
+    @-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style></head>
+
+<body >
+<!--引入抽取的topbar-->
+<!--模板名会使用thymeleaf的规则-->
+<div th:replace="common/bars::topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <!--引入侧边栏-->
+        <div th:replace="common/bars::#sidebar(activeUri='events')"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+            <form th:action="@{/event}" method="post">
+<!--                对于修改的员工信息，以PUT方式提交，由于method只有post和get-->
+<!--                所以使用SpringMvc中的input hidden方式提交-->
+<!--                ***********************-->
+<!--                1.发送put请求修改员工数据-->
+<!--                2.SpringMvc中配置HiddenHttpMethodFilter (SpringBoot自动配置好了)-->
+<!--                3.页面创建一个POST表单-->
+<!--                4.创建一个input项，name='_method' 值就是我们制定的请求方式-->
+                <input type="hidden" name="_method" value="put" th:if="${event!=null}"/>
+                <input type="hidden" name="id" th:if="${event!=null}" th:value="${event.id}"/>
+
+                <!-- lng -->
+                <div class="form-group">
+                    <label for="lng">经度</label>
+                    <input name="lng" th:value="${event}!=null?${event.lng}:''" type="text" class="form-control" id="lng"  placeholder="lng">
+                </div>
+                <!-- lat -->
+                <div class="form-group">
+                    <label for="lat">纬度</label>
+                    <input name="lat" th:value="${event}!=null?${event.lat}:''" type="text" class="form-control" id="lat"  placeholder="lat">
+                </div>
+                <!--time-->
+                <div class="form-group">
+                    <label for="time">事件发生时间</label>
+                    <input name="time" th:value="${event!=null}?${#dates.format(event.time,'yyyy-MM-dd HH:mm:ss')}:''" type="text" class="form-control" id="time" placeholder="2012-12-12 14:30:20">
+                </div>
+                <!--eventTypeId-->
+                <div class="form-group">
+                    <label for="eventType">事件类型</label>
+                    <select class="form-control" id="eventType" name="eventTypeId">
+                        <option th:each="eventType:${eventTypes}" th:value="${eventType.id}" th:text="${eventType.eventName}" th:selected="${event!=null}?${event.eventTypeId == eventType.id}"></option>
+                    </select>
+                </div>
+                <!-- flag -->
+                <div class="form-group">
+                    <label >事件是否处理</label><br/>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flag" value="1" th:checked="${event!=null}?${event.flag}==1:''">
+                        <label class="form-check-label" >是</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flag" value="0"  th:checked="${event!=null}?${event.flag}==0:''">
+                        <label class="form-check-label" >否</label>
+                    </div>
+                </div>
+                <!-- details -->
+                <div class="form-group">
+                    <label for="details">详情</label>
+                    <input name="details" th:value="${event}!=null?${event.details}:''" type="text" class="form-control" id="details"  placeholder="details">
+                </div>
+                <!-- remark -->
+                <div class="form-group">
+                    <label for="remark">备注</label>
+                    <input name="remark" th:value="${event}!=null?${event.remark}:''" type="text" class="form-control" id="remark"  placeholder="remark">
+                </div>
+
+                <button th:text="${event!=null}?'修改':'添加'" type="submit" class="btn btn-primary">添 加</button>
+                <button type="button" onclick="window.history.go(-1);" class="btn btn-secondary">取消</button>
+            </form>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/asset/js/jquery-3.3.1.slim.min.js}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script th:src="@{/asset/js/popper.min.js}"></script>
+<script th:src="@{/asset/js/bootstrap.min.js}"></script>
+
+<!-- Icons -->
+<script th:src="@{/asset/js/feather.min.js}"></script>
+<script>
+    feather.replace()
+</script>
+
+
+</body></html>

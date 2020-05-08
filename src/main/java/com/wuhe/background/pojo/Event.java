@@ -1,4 +1,4 @@
-package com.wuhe.background.entities;
+package com.wuhe.background.pojo;
 
 /**
  * @author wuhe

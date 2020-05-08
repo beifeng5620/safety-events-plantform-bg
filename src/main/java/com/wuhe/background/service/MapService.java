@@ -1,9 +1,9 @@
 package com.wuhe.background.service;
 
 import com.wuhe.background.dao.MapDao;
-import com.wuhe.background.entities.Event;
-import com.wuhe.background.entities.EventWeekly;
-import com.wuhe.background.entities.Marker;
+import com.wuhe.background.pojo.Event;
+import com.wuhe.background.pojo.EventWeekly;
+import com.wuhe.background.pojo.Marker;
 import com.wuhe.background.view.RectQueryView;
 import com.wuhe.background.view.SubmitEventView;
 import org.springframework.beans.factory.annotation.Autowired;

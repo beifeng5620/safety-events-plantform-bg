@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)https://getbootstrap.com/docs/4.1/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="https://getbootstrap.com/favicon.ico" />
+
+    <title>事件审核</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/asset/css/bootstrap.min.css}" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/asset/css/dashboard.css}" rel="stylesheet" />
+    <style type="text/css">/* Chart.js */
+    @-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style></head>
+
+<body >
+
+<div th:replace="common/bars::topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+
+        <div th:replace="common/bars::#sidebar(activeUri='eventTmps')"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+            <form th:action="@{/eventTmp}" method="post">
+
+                <input type="hidden" name="_method" value="put"/>
+                <input type="hidden" name="id"  th:value="${eventTmp.id}"/>
+
+                <!-- lng -->
+                <div class="form-group">
+                    <label for="lng">经度</label>
+                    <input name="lng" th:value="${eventTmp.lng}" type="text" class="form-control" id="lng"  placeholder="lng">
+                </div>
+                <!-- lat -->
+                <div class="form-group">
+                    <label for="lat">纬度</label>
+                    <input name="lat" th:value="${eventTmp.lat}" type="text" class="form-control" id="lat"  placeholder="lat">
+                </div>
+                <!--time-->
+                <div class="form-group">
+                    <label for="time">事件发生时间</label>
+                    <input name="time" th:value="${#dates.format(eventTmp.time,'yyyy-MM-dd HH:mm:ss')}" type="text" class="form-control" id="time" placeholder="2012-12-12 14:30:20">
+                </div>
+                <!--eventTypeId-->
+                <div class="form-group">
+                    <label for="eventType">事件类型</label>
+                    <select class="form-control" id="eventType" name="eventTypeId">
+                        <option th:each="eventType:${eventTypes}" th:value="${eventType.id}" th:text="${eventType.eventName}" th:selected="${eventTmp.eventTypeId == eventType.id}"></option>
+                    </select>
+                </div>
+                <!-- contact -->
+                <div class="form-group">
+                    <label for="contact">提交人联系方式</label>
+                    <input name="contact" th:value="${eventTmp.contact}" type="text" class="form-control" id="contact"  placeholder="contact">
+                </div>
+                <!-- ip -->
+                <div class="form-group">
+                    <label for="ip">提交人IP地址</label>
+                    <input name="ip" th:value="${eventTmp.ip}" type="text" class="form-control" id="ip"  placeholder="ip">
+                </div>
+                <!-- flag -->
+                <div class="form-group">
+                    <label >审核通过</label><br/>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flag" value="1" th:checked="${eventTmp.flag}==1">
+                        <label class="form-check-label" >是</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flag" value="0"  th:checked="${eventTmp.flag}!=1">
+                        <label class="form-check-label" >否</label>
+                    </div>
+                </div>
+                <!-- details -->
+                <div class="form-group">
+                    <label for="details">详情</label>
+                    <input name="details" th:value="${eventTmp.details}" type="text" class="form-control" id="details"  placeholder="details">
+                </div>
+
+
+                <button type="submit" class="btn btn-primary">保存</button>
+<!--                form下的button 按钮在没有明确的给出type类型时，会有一个默认值为：type=”submit”. 所以需要改成:type="button"-->
+                <button type="button" onclick="window.history.go(-1);" class="btn btn-secondary">取消</button>
+            </form>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/asset/js/jquery-3.3.1.slim.min.js}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script th:src="@{/asset/js/popper.min.js}"></script>
+<script th:src="@{/asset/js/bootstrap.min.js}"></script>
+
+<!-- Icons -->
+<script th:src="@{/asset/js/feather.min.js}"></script>
+<script>
+    feather.replace();
+</script>
+
+
+</body></html>

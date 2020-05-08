@@ -1,9 +1,9 @@
 package com.wuhe.background.dao;
 
-import com.wuhe.background.entities.Event;
-import com.wuhe.background.entities.EventWeekly;
-import com.wuhe.background.entities.Marker;
-import com.wuhe.background.utils.IDUtils;
+import com.wuhe.background.pojo.Event;
+import com.wuhe.background.pojo.EventWeekly;
+import com.wuhe.background.pojo.Marker;
+import com.wuhe.background.util.IDUtil;
 import com.wuhe.background.view.RectQueryView;
 import com.wuhe.background.view.SubmitEventView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,7 @@ import java.util.Map;
  */
 @Repository
 public class MapDao {
+
     @Autowired
     JdbcTemplate jdbcTemplate;
 
@@ -157,7 +158,7 @@ public class MapDao {
     public  Object submitEvent(SubmitEventView view) {
         if (!view.isEmpty()) {
             String sql = "INSERT INTO event_tmp VALUES(?,?,?,?,?,?,?,?,?)";
-            Object[] obj = new Object[]{IDUtils.uuid(),view.getLng(),view.getLat(),view.getTime(),
+            Object[] obj = new Object[]{IDUtil.uuid(),view.getLng(),view.getLat(),view.getTime(),
                                 view.getEventType(),view.getContact(),view.getIp(),"0",view.getDetails()};
             int rows = jdbcTemplate.update(sql,obj);
             if (rows == 1) {

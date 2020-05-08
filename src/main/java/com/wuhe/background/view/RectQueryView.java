@@ -61,7 +61,7 @@ public class RectQueryView {
     }
 
     /**
-     * 判断入参是否是null
+     * 判断入参是否是null,只要有一个是空值，就返回true
      * @return
      */
     public  boolean isEmpty() {

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author wuhe
  * @Date 2020/4/30 - 10:47
+ * 用户端 前端请求接口处理
  */
 @RestController
 public class MapController {
