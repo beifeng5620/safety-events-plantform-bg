@@ -19,3 +19,10 @@ server:
   port: 8080
   servlet:
     context-path: /
+logging:
+  file:
+    name: ./logs/background.log
+  level:
+    com.wuhe: debug
+
+

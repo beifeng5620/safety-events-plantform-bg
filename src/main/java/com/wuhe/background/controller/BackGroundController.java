@@ -5,6 +5,8 @@ import com.wuhe.background.entity.EventTmp;
 import com.wuhe.background.entity.EventType;
 import com.wuhe.background.entity.SysAdmin;
 import com.wuhe.background.service.BackGroundService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,8 @@ public class BackGroundController {
 
     @Autowired
     BackGroundService backGroundService;
+
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     //查询所有事件返回列表页面
     //model map modelmap参数都在请求域中
@@ -48,7 +52,7 @@ public class BackGroundController {
     @PostMapping("/event")
     public String addEvent(Event event){
         backGroundService.saveOrUpdateEvent(event);
-        System.out.println("event = " + event);
+        logger.debug("event = " + event);
         //来到事件列表页面
         //redirect:重定向 /代表当前项目路径 相当于客户端行为
         //forward:转发 地址栏URL不变 相当于服务端行为
@@ -72,7 +76,7 @@ public class BackGroundController {
     //事件修改
     @PutMapping("/event")
     public String updateEvent(Event event){
-        System.out.println("event = " + event);
+        logger.debug("event = " + event);
         backGroundService.saveOrUpdateEvent(event);
 
         return "redirect:/events";
@@ -112,7 +116,7 @@ public class BackGroundController {
 
     @PutMapping("/eventTmp")
     public String updateEventTmp(EventTmp eventTmp){
-        System.out.println("eventTmp = " + eventTmp);
+        logger.debug("eventTmp = " + eventTmp);
         backGroundService.updateEventTmp(eventTmp);
 
         // FIXME 审核通过后还需要加入到event表中
@@ -146,7 +150,7 @@ public class BackGroundController {
     @PostMapping("/eventType")
     public String addEventType(EventType eventType){
         backGroundService.saveOrUpdateEventType(eventType);
-        System.out.println("eventType = " + eventType);
+        logger.debug("eventType = " + eventType);
         return "redirect:/eventTypes";
     }
 
@@ -159,7 +163,7 @@ public class BackGroundController {
 
     @PutMapping("/eventType")
     public String updateEventType(EventType eventType){
-        System.out.println("eventType = " + eventType);
+        logger.debug("eventType = " + eventType);
         backGroundService.saveOrUpdateEventType(eventType);
         return "redirect:/eventTypes";
     }
