@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)https://getbootstrap.com/docs/4.1/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="https://getbootstrap.com/favicon.ico" />
+
+    <title>管理员/第三方添加/修改</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/asset/css/bootstrap.min.css}" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/asset/css/dashboard.css}" rel="stylesheet" />
+    <style type="text/css">/* Chart.js */
+    @-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style></head>
+
+<body >
+
+<div th:replace="common/bars::topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="common/bars::#sidebar(activeUri='sysAdmins')"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+            <form th:action="@{/sysAdmin}" method="post">
+                <input type="hidden" name="_method" value="put" th:if="${sysAdmin!=null}"/>
+                <input type="hidden" name="id" th:if="${sysAdmin!=null}" th:value="${sysAdmin.id}"/>
+
+                <!-- account -->
+                <div class="form-group">
+                    <label for="account">账号</label>
+                    <input name="account" th:value="${sysAdmin}!=null?${sysAdmin.account}:''" type="text" class="form-control" id="account"  placeholder="account">
+                </div>
+                <!-- password -->
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input name="password" th:value="${sysAdmin}!=null?${sysAdmin.password}:''" type="text" class="form-control" id="password"  placeholder="password">
+                </div>
+                <!-- permissionLevel -->
+                <div class="form-group">
+                    <label for="permissionLevel">权限级别(0级别为管理员)</label>
+                    <input name="permissionLevel" th:value="${sysAdmin}!=null?${sysAdmin.permissionLevel}:''" type="text" class="form-control" id="permissionLevel"  placeholder="permissionLevel">
+                </div>
+                <button th:text="${sysAdmin!=null}?'修改':'添加'" type="submit" class="btn btn-primary">添 加</button>
+                <button type="button" onclick="window.history.go(-1);" class="btn btn-secondary">取消</button>
+            </form>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/asset/js/jquery-3.3.1.slim.min.js}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script th:src="@{/asset/js/popper.min.js}"></script>
+<script th:src="@{/asset/js/bootstrap.min.js}"></script>
+
+<!-- Icons -->
+<script th:src="@{/asset/js/feather.min.js}"></script>
+<script>
+    feather.replace()
+</script>
+
+
+</body></html>

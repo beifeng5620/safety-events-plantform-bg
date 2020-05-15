@@ -95,6 +95,10 @@ public class BackGroundDao {
         return jdbcTemplate.update("delete from event_type where id = ?",new Object[]{id});
     }
 
+    public int deleteSysAdminById(String id) {
+        logger.debug("deleteSysAdminById:"+ id);
+        return jdbcTemplate.update("delete from sys_admin where id = ?",new Object[]{id});
+    }
     // 存、改
     public int saveOrUpdateEvent(Event event) {
         logger.debug("saveOrUpdateEvent:"+ event);
@@ -124,5 +128,18 @@ public class BackGroundDao {
         return jdbcTemplate.update("update event_tmp set lng = ?,lat = ?,time = ?,event_type_id = ?,contact = ?,ip = ?,flag = ?,details = ? where id = ?",
                     new Object[]{eventTmp.getLng(),eventTmp.getLat(),eventTmp.getTime(),eventTmp.getEventTypeId(),
                             eventTmp.getContact(),eventTmp.getIp(),eventTmp.getFlag(),eventTmp.getDetails(),eventTmp.getId()});
+    }
+
+
+    public int saveOrUpdateSysAdmin(SysAdmin sysAdmin) {
+        logger.debug("SysAdmin:"+ sysAdmin);
+        if(sysAdmin.getId() == null){
+            sysAdmin.setId(IDUtil.uuid());
+            return jdbcTemplate.update("insert into sys_admin values (?,?,?,?)",new Object[]{sysAdmin.getId(),sysAdmin.getAccount(),
+                    sysAdmin.getPassword(),sysAdmin.getPermissionLevel()});
+        } else {
+            return jdbcTemplate.update("update sys_admin set account = ?,password = ?,permission_level = ? where id = ?",
+                    new Object[]{sysAdmin.getAccount(),sysAdmin.getPassword(),sysAdmin.getPermissionLevel(),sysAdmin.getId()});
+        }
     }
 }

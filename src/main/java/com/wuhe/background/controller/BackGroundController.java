@@ -174,6 +174,45 @@ public class BackGroundController {
         return "redirect:/eventTypes";
     }
 
+//**************************管理员/第三方部分********************************
+    @GetMapping("/sysAdmins")
+    public String toAdminThirdListPage(Model model){
+        List<SysAdmin> sysAdmins = backGroundService.getSysAdmins();
+        model.addAttribute("sysAdmins",sysAdmins);
+        return "sysAdmin/list";
+    }
+
+    @GetMapping("/sysAdmin")
+    public String toSysAdminAddPage(){
+        return "sysAdmin/add";
+    }
+
+    @PostMapping("/sysAdmin")
+    public String addSysAdmin(SysAdmin sysAdmin){
+        backGroundService.saveOrUpdateSysAdmin(sysAdmin);
+        logger.debug("sysAdmin = " + sysAdmin);
+        return "redirect:/sysAdmins";
+    }
+
+    @GetMapping("/sysAdmin/{id}")
+    public String toSysAdminEditPage(@PathVariable("id") String id, Model model){
+        SysAdmin sysAdminById = backGroundService.getSysAdminById(id);
+        model.addAttribute("sysAdmin",sysAdminById);
+        return "sysAdmin/add";
+    }
+
+    @PutMapping("/sysAdmin")
+    public String updateSysAdmin(SysAdmin sysAdmin){
+        logger.debug("SysAdmin = " + sysAdmin);
+        backGroundService.saveOrUpdateSysAdmin(sysAdmin);
+        return "redirect:/sysAdmins";
+    }
+
+    @DeleteMapping("/sysAdmin/{id}")
+    public String deleteSysAdmin(@PathVariable("id") String id){
+        backGroundService.deleteSysAdminById(id);
+        return "redirect:/sysAdmins";
+    }
 //**************************批量导入事件********************************
     @ResponseBody
     @RequestMapping("/batchImportEvents/{uid}")

@@ -82,6 +82,10 @@ public class BackGroundService {
         return backGroundDao.deleteEventTypeById(id);
     }
 
+    public int deleteSysAdminById(String id) {
+        return backGroundDao.deleteSysAdminById(id);
+    }
+
     // 改、存
     public int saveOrUpdateEvent(Event event){
         return backGroundDao.saveOrUpdateEvent(event);
@@ -93,5 +97,9 @@ public class BackGroundService {
 
     public int updateEventTmp(EventTmp eventTmp) {
         return backGroundDao.updateEventTmp(eventTmp);
+    }
+
+    public int saveOrUpdateSysAdmin(SysAdmin sysAdmin) {
+        return backGroundDao.saveOrUpdateSysAdmin(sysAdmin);
     }
 }

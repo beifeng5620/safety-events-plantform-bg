@@ -44,11 +44,15 @@ public class LoginController {
             SysAdmin sysAdminByAccount = backGroundService.getSysAdminByAccount(username);
             if (null != sysAdminByAccount) {
                 if (sysAdminByAccount.getPassword().equals(password)) {
-                    //为了防止表单重复提交。使用重定向
-                    session.setAttribute("loginUser",username);
-                    String uid = sysAdminByAccount.getId();
-                    session.setAttribute("loginUserId", uid);
-                    return "redirect:/main.html";
+                    if (sysAdminByAccount.getPermissionLevel().equals("0")) {
+                        //为了防止表单重复提交。使用重定向
+                        session.setAttribute("loginUser",username);
+                        String uid = sysAdminByAccount.getId();
+                        session.setAttribute("loginUserId", uid);
+                        return "redirect:/main.html";
+                    }
+                    map.put("msg","管理员权限不足");
+                    return "login";
                 }
                 map.put("msg","用户名密码错误");
                 return "login";
