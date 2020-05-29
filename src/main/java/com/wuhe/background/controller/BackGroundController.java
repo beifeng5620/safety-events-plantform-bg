@@ -124,6 +124,8 @@ public class BackGroundController {
         BeanUtils.copyProperties(eventTmp,event);
         // 不给ID赋值，让其自动生成，否则在DAO层就会更新id关联的记录
         event.setId(null);
+        // 事件审核通过后 设置为未处理，要在这里设置的原因是 event_tmp表和event表的flag分别表示不同的意思
+        event.setFlag("0");
         backGroundService.saveOrUpdateEvent(event);
         return "redirect:/eventTmps";
     }
