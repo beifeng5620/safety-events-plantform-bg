@@ -11,7 +11,7 @@
  Target Server Version : 80015
  File Encoding         : 65001
 
- Date: 29/05/2020 15:49:35
+ Date: 29/05/2020 16:28:01
 */
 
 SET NAMES utf8mb4;
@@ -67,8 +67,8 @@ INSERT INTO `event` VALUES ('1013', 118.12254700, 24.50508900, '2020-05-25 21:20
 DROP TABLE IF EXISTS `event_tmp`;
 CREATE TABLE `event_tmp`  (
   `id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `lng` double(255, 0) NOT NULL,
-  `lat` double(255, 0) NOT NULL,
+  `lng` double(255, 8) NOT NULL,
+  `lat` double(255, 8) NOT NULL,
   `time` datetime(0) NOT NULL,
   `event_type_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `contact` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '提交事件的用户的联系方式',
